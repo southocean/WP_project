@@ -29,22 +29,21 @@ class Subject extends AppModel {
 		'sbID' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'sbName' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
+
+    //var $hasMany = "Question";
+    var $hasMany = array(
+        'Question' => array(
+            'className' => 'Question',
+            'foreignKey' => 'sbID',
+            'dependent' => false,
+        ),
+    );
 }

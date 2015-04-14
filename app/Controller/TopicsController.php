@@ -18,6 +18,7 @@ class TopicsController extends AppController{
                 $this->redirect('index');
             }
         }
+
     }
 
     //List all topics

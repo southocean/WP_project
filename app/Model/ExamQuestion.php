@@ -153,4 +153,16 @@ class ExamQuestion extends AppModel {
 			),
 		),
 	);
+
+    var $belongsTo = array(
+        'Test' => array(
+            'className' => 'Test',
+            'foreignKey' => 'testID',
+        ),
+        'Question' => array(
+            'className' => 'Question',
+            'foreignKey' => 'qID',
+        ),
+
+    );
 }

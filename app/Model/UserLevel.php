@@ -101,4 +101,15 @@ class UserLevel extends AppModel {
 			),
 		),
 	);
+
+    var $belongsTo = array (
+        'User' => array(
+            'className' => 'User',
+            'foreignKey' => 'uID'
+        ),
+        'Subject' => array(
+            'className' => 'Subject',
+            'foreignKey' => 'sbID'
+        )
+    );
 }

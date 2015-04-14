@@ -95,19 +95,20 @@ class Test extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'belongtoTeacher' => array(
-			'className' => 'Teacher',
-			'foreignKey' => 'uID',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'belongtoSubject' => array(
+        'User' => array(
+            'className' => 'User',
+            'foreignKey' => 'uID'
+        ),
+		'Subject' => array(
 			'className' => 'Subject',
 			'foreignKey' => 'sbID',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
 		)
 	);
+    public $hasMany = array(
+        'ExamQuestion' => array(
+            'className' => 'ExamQuestion',
+            'foreignKey' => 'eqID',
+        )
+    );
+
 }

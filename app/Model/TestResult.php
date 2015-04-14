@@ -124,4 +124,15 @@ class TestResult extends AppModel {
 			),
 		),
 	);
+
+    var $belongsTo = array (
+        'User' => array(
+            'className' => 'User',
+            'foreignKey' => 'uID'
+        ),
+        'Test' => array(
+            'className' => 'Test',
+            'foreignKey' => 'testID'
+        )
+    );
 }

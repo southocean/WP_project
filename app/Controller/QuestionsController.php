@@ -8,18 +8,23 @@
 
 class QuestionsController extends AppController {
     var $name = "Questions";
-    function addQuestion() {
+    public $components = array('Session');
+
+    public function add() {
         if($this->request->is('post')) {
-            $this->Topic->create();
-            if($this->Topic->save($this->request->data)){
-                $this->Session->setFlash('The topic has been created!');
-                $this->redirect('index');
+            $this->Question->create();
+            if($this->Question->save($this->request->data)){
+                $this->Session->setFlash('The question has been created!');
+                //$this->redirect('index');
             }
         }
+        $this->set('topics', $this->Question->Topic->find("all"));
+
     }
 
-    function indexQuestion() {
-        $data = $this->Topic->find("all");
-        $this->set("topics", $data);
+    public function index() {
+        $data = $this->Question->find("all");
+        $this->set("questions", $data);
+        Debugger::dump($data);
     }
-} 
+}

@@ -11,7 +11,7 @@ class User extends AppModel {
  *
  * @var string
  */
-	public $primaryKey = 'y';
+	public $primaryKey = 'uID';
 
 /**
  * Display field
@@ -123,4 +123,32 @@ class User extends AppModel {
 			),
 		),
 	);
+
+    var $hasOne = array (
+        'UserLevel' => array(
+            'className' => 'UserLevel',
+            'foreignKey' => 'uID',
+            'dependent' => false,
+        ),
+    );
+    var $hasMany = array (
+        'TestResult' => array(
+            'className' => 'TestResult',
+            'foreignKey' => 'uID',
+            'dependent' => false,
+        ),
+        'Test' => array(
+            'className' => 'Test',
+            'foreignKey' => 'uID',
+            'dependent' => false,
+        ),
+        'Question' => array(
+            'className' => 'Question',
+            'foreignKey' => 'uID',
+            'dependent' => false,
+        ),
+
+    );
+
+
 }
