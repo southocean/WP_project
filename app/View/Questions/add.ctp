@@ -9,8 +9,8 @@
     echo $this->Form->input('option_3', array('label' => 'Option 3:'));
     echo $this->Form->input('option_4', array('label' => 'Option 4:'));
     echo $this->Form->input('qAns', array('label' => 'Answer:'));
-    echo $this->Form->input('topID', array('label' => 'Topic:'));
-    echo $this->Form->input('sbID', array('label' => 'Subject:'));
+    echo $this->Form->input('topics', array('label' => 'Topic:'));
+    echo $this->Form->input('subjects', array('label' => 'Subject:'));
 
     echo $this->Form->end('Save Question');
 ?>

@@ -25,14 +25,14 @@ class TestsController extends AppController{
                 array('conditions' => array('Question.sbID' => $data['Test']['sbID']),
                     'fields' => array('Question.qID', 'Question.qAns',)));
             // Number of question in test > Total question in database ==> return
+            Debugger::dump($listQuestion);
             if ($data['Test']['numberQuestion'] > count($listQuestion)) {
                 $this->Session->setFlash('ERROR: Number of question in your test too large!');
                 return;
             } else {
-                if ($this->Test->save($this->request->data)) {
-                    $this->Session->setFlash('The test has been created!');
+                $data['Test']['uID'] = $this->Auth->user('uID');
+                if ($this->Test->save($data)) {
                     $testID = $this->Test->find('first', array('order' => array('Test.created DESC'), 'fields' => array('Test.testID')));
-                    //Debugger::dump($testID);
                 }
             }
 
@@ -45,7 +45,6 @@ class TestsController extends AppController{
             //Debugger::dump($randAns);
             for ($i = 0; $i < $data['Test']['numberQuestion']; $i++) {
                 shuffle($randAns); //tron dap an
-
                 $tempQues[$i] = array(
                     'testID' => $testID['Test']['testID'],
                     'qID' => $listQuestion[$i]['Question']['qID'],
@@ -60,17 +59,68 @@ class TestsController extends AppController{
             //Debugger::dump($tempQues);
             //Save questions into database.
             $this->Test->ExamQuestion->saveAll($tempQues['ExamQuestion']);
-
-            $this->Session->setFlash('Init question for test have done!');
-
+            $this->Session->setFlash('The test has been created!');
+            $this->redirect('index');
         }
     }
 
     public function index() {
         $listTest = $this->Test->find('all');
+        //Debugger::dump($listTest);
+        $this->paginate = array(
+            'Test' => array(
+                'limit' => 100,
+                'recursive' => 0
+            )
+        );
+
+        $listTest = $this->paginate('Test');
+        //Debugger::dump($listTest);
         $this->set('listTest', $listTest);
     }
 
+    public function view($id) {
+        $test = $this->Test->findByTestid($id);
+        $listQues = $this->Test->ExamQuestion->find('all', array(
+            'conditions' => array('ExamQuestion.testID' => $id),
+            'fields' => array('ExamQuestion.*', 'Question.*'),
+            'order' => array('ExamQuestion.index ASC')
+        ));
+        $this->set('test', $test);
+        $this->set('listQues', $listQues);
+        //Debugger::dump($test);
+        //Debugger::dump($listQues);
+    }
+
+    //Get result from test
+    public function getResult() {
+        $testAns = $this->Session->read('testAns');
+        //Debugger::dump($testAns);
+        $testInfo = $this->Test->findByTestid($testAns['testID']);
+        $listQues = $this->Test->ExamQuestion->find('all', array(
+            'conditions' => array('ExamQuestion.testID' => $testAns['testID']),
+            'fields' => array('ExamQuestion.*', 'Question.*'),
+            'order' => array('ExamQuestion.index ASC')
+        ));
+
+        $index = 0;
+        $trueAns = 0;
+        foreach ($testAns['result']['TestResult'] as $QuestionResult) {
+            if(strcmp($listQues[$index]['ExamQuestion'][$QuestionResult], $listQues[$index]['Question']['qAns'])==0){
+                $listQues[$index]['state'] = 'true';
+                $trueAns++;
+            } else {
+                $listQues[$index]['state'] = 'false';
+                $listQues[$index]['uAns'] = $QuestionResult;
+            }
+            $index++;
+        }
+
+        $this->set('testInfo', $testInfo);
+        $this->set('listQues', $listQues);
+        Debugger::dump($listQues);
+        Debugger::dump($trueAns);
+    }
     //Create file DOC
     function createDoc($listQuestion) {
 

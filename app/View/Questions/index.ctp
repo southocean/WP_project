@@ -29,7 +29,6 @@
         }
         echo "</p><p>";
         echo $this->Html->link('Add question', array('controller' => 'Questions','action' => 'add'));
-
         echo "</p>";
     ?>
 </body>

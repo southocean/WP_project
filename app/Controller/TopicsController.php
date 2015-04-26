@@ -18,14 +18,12 @@ class TopicsController extends AppController{
                 $this->redirect('index');
             }
         }
-
     }
 
     //List all topics
     public function index() {
         $data = $this->Topic->find("all");
         $this->set("topics", $data);
-
     }
 
 } 

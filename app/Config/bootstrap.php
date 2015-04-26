@@ -21,7 +21,7 @@
  * @since         CakePHP(tm) v 0.10.8.2117
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
+header('Content-Type: text/html; charset=utf-8');
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 
