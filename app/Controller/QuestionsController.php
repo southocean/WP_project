@@ -11,17 +11,22 @@ class QuestionsController extends AppController {
     public $components = array('Session');
 
     public function add() {
-        $topics = $this->Question->Topic->find('list', array('fields' => array('Topic.topName', 'Topic.topID')));
-        $subjects = $this->Question->Subject->find('list', array('fields' => array('Subject.sbName', 'Subject.sbID')));
+        $topics = $this->Question->Topic->find('list', array('fields' => array('Topic.topID','Topic.topName')));
+        $subjects = $this->Question->Subject->find('list', array('fields' => array( 'Subject.sbID','Subject.sbName')));
+
         $this->set('topics', $topics);
         $this->set('subjects', $subjects);
 
         if($this->request->is('post')) {
             $this->Question->create();
             $data = $this->request->data;
-            $data['Question']['topID'] = $topics[$data['Question']['topics']];
-            $data['Question']['sbID'] = $subjects[$data['Question']['subjects']];
+            Debugger::dump($data);
+            $data['Question']['topID'] = $data['Question']['topics'];
+            $data['Question']['sbID'] = $data['Question']['subjects'];
             $data['Question']['uID'] = $this->Auth->user('uID');
+            $data['Question']['correctNum'] = 0;
+            $data['Question']['totalNum'] = 0;
+            Debugger::dump($data);
             if($this->Question->save($data)){
                 $this->Session->setFlash('The question has been created!');
                 //$this->redirect('index');

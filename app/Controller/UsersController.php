@@ -126,6 +126,7 @@ class UsersController extends AppController {
     }
 
     public function makeTest($testID){
+
         $Test = ClassRegistry::init('Test');
         $testInfo = $Test->findByTestid($testID);
         $listQues = $Test->ExamQuestion->find('all', array(
@@ -136,6 +137,7 @@ class UsersController extends AppController {
         //
         $this->set('testInfo', $testInfo);
         $this->set('listQues', $listQues);
+
         //Debugger::dump($listQues);
 
         //Nhan ket qua va tinh diem

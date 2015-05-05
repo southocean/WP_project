@@ -13,6 +13,9 @@ class TestsController extends AppController{
 
     function add()
     {
+        $subjects = $this->Test->Subject->find('list', array('fields' => array( 'Subject.sbID','Subject.sbName')));
+        $this->set('subjects', $subjects);
+
         $Question = ClassRegistry::init('Question');
         if ($this->request->is('post')) {
             $this->Test->create();
@@ -59,9 +62,12 @@ class TestsController extends AppController{
             //Debugger::dump($tempQues);
             //Save questions into database.
             $this->Test->ExamQuestion->saveAll($tempQues['ExamQuestion']);
+            unset($this->request->data);
             $this->Session->setFlash('The test has been created!');
             $this->redirect('index');
         }
+
+
     }
 
     public function index() {
@@ -93,9 +99,11 @@ class TestsController extends AppController{
     }
 
     //Get result from test
-    public function getResult() {
+    public function getResult()
+    {
+        $TestResult = ClassRegistry::init('TestResult');
         $testAns = $this->Session->read('testAns');
-        //Debugger::dump($testAns);
+        Debugger::dump($testAns);
         $testInfo = $this->Test->findByTestid($testAns['testID']);
         $listQues = $this->Test->ExamQuestion->find('all', array(
             'conditions' => array('ExamQuestion.testID' => $testAns['testID']),
@@ -105,21 +113,44 @@ class TestsController extends AppController{
 
         $index = 0;
         $trueAns = 0;
-        foreach ($testAns['result']['TestResult'] as $QuestionResult) {
-            if(strcmp($listQues[$index]['ExamQuestion'][$QuestionResult], $listQues[$index]['Question']['qAns'])==0){
-                $listQues[$index]['state'] = 'true';
-                $trueAns++;
-            } else {
-                $listQues[$index]['state'] = 'false';
-                $listQues[$index]['uAns'] = $QuestionResult;
+        if (isset($testAns['result'])) {
+            foreach ($testAns['result']['TestResult'] as $QuestionResult) {
+                if (isset($listQues[$index]['Question']['qAns']) && isset($listQues[$index]['ExamQuestion'][$QuestionResult])) {
+                    if (strcmp($listQues[$index]['ExamQuestion'][$QuestionResult], $listQues[$index]['Question']['qAns']) == 0) {
+                        $listQues[$index]['state'] = 'true';
+                        $trueAns++;
+
+                    } else {
+                        $listQues[$index]['state'] = 'false';
+                        $listQues[$index]['uAns'] = $QuestionResult;
+
+                    }
+                } else {
+
+                    $listQues[$index]['state'] = 'false';
+                }
+                $index++;
             }
-            $index++;
         }
 
+        $saveResult['TestResult']['uID'] = $this->Auth->user('uID');
+        if(isset($testInfo['Test'])) {
+            $saveResult['TestResult']['testID'] = $testInfo['Test']['testID'];
+            if (count($listQues) > 0)
+                $saveResult['TestResult']['score'] = round(10 * $trueAns / count($listQues), 2);
+            try {
+                $TestResult->save($saveResult);
+            } catch (Exception $e) {
+                echo 'Caught exception: ', $e->getMessage(), "\n";
+            }
+        }
         $this->set('testInfo', $testInfo);
         $this->set('listQues', $listQues);
-        Debugger::dump($listQues);
-        Debugger::dump($trueAns);
+        $this->set('trueAns', $trueAns);
+        $this->Session->delete('testAns');
+        //$this->Session->destroy();
+        //Debugger::dump($listQues);
+        //Debugger::dump($trueAns);
     }
     //Create file DOC
     function createDoc($listQuestion) {
