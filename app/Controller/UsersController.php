@@ -126,7 +126,6 @@ class UsersController extends AppController {
     }
 
     public function makeTest($testID){
-
         $Test = ClassRegistry::init('Test');
         $testInfo = $Test->findByTestid($testID);
         $listQues = $Test->ExamQuestion->find('all', array(
@@ -138,8 +137,6 @@ class UsersController extends AppController {
         $this->set('testInfo', $testInfo);
         $this->set('listQues', $listQues);
 
-        //Debugger::dump($listQues);
-
         //Nhan ket qua va tinh diem
         if($this->request->is('post')) {
             $this->User->create();
@@ -150,6 +147,46 @@ class UsersController extends AppController {
             $this->redirect(array('controller' => 'tests','action' => 'getResult'));
         }
     }
+
+    public function getTestId() {
+            if($this->request->is('post')) {
+            $Test = ClassRegistry::init('Test');
+            $data = $Test->findByTestid($this->request->data['TestID']['testID']);
+            Debugger::dump($data);
+            if(!$data) {
+                $this->Session->setFlash(__('TestID not exist.'));
+            } else {
+                $this->Session->write('getTestId', $this->request->data['TestID']['testID']);
+                $this->redirect('examiner');
+            }
+            //Debugger::dump($data);
+
+        }
+
+    }
+
+    public function examiner() {
+        $Test = ClassRegistry::init('Test');
+
+        $testID = $this->Session->read('getTestId');
+        if($testID == null) $this->redirect('getTestId');
+
+        $testInfo = $Test->findByTestid($testID);
+        $listQues = $Test->ExamQuestion->find('all', array(
+            'conditions' => array('ExamQuestion.testID' => $testID),
+            'fields' => array('ExamQuestion.*', 'Question.*'),
+            'order' => array('ExamQuestion.index ASC')
+        ));
+        $this->Session->delete('getTestId');
+
+        if($this->request->is('post')) {
+
+        }
+        Debugger::dump($testInfo);
+        Debugger::dump($listQues);
+    }
+
+
 }
 
 ?>

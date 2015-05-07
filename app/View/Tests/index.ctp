@@ -28,7 +28,7 @@
         }
     }
     echo "</p><p>";
-    echo $this->Html->link('Add Test', array('controller' => 'Test','action' => 'add'));
+    echo $this->Html->link('Add Test', array('controller' => 'Tests','action' => 'add'));
 
     echo "</p>";
 ?>

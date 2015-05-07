@@ -12,7 +12,7 @@ class QuestionsController extends AppController {
 
     public function add() {
         $topics = $this->Question->Topic->find('list', array('fields' => array('Topic.topID','Topic.topName')));
-        $subjects = $this->Question->Subject->find('list', array('fields' => array( 'Subject.sbID','Subject.sbName')));
+        $subjects = $this->Question->Subject->find('list', array('fields' => array('Subject.sbID','Subject.sbName')));
 
         $this->set('topics', $topics);
         $this->set('subjects', $subjects);
@@ -32,7 +32,7 @@ class QuestionsController extends AppController {
                 //$this->redirect('index');
             }
         }
-        Debugger::dump($this->Question->Topic->find('list', array('fields' => array('Topic.topName', 'Topic.topID'))));
+        //Debugger::dump($this->Question->Topic->find('list', array('fields' => array('Topic.topName', 'Topic.topID'))));
 
     }
 

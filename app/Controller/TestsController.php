@@ -15,20 +15,21 @@ class TestsController extends AppController{
     {
         $subjects = $this->Test->Subject->find('list', array('fields' => array( 'Subject.sbID','Subject.sbName')));
         $this->set('subjects', $subjects);
-
+        //Debugger::dump($subjects);
         $Question = ClassRegistry::init('Question');
         if ($this->request->is('post')) {
             $this->Test->create();
             $data = $this->request->data;
-
+            $data['Test']['sbID'] = $data['Test']['subjects'];
+            //Debugger::dump($data);
             //Get question form table question base on Subject ID
             //$listQuestion = $Question->find('all');
 
             $listQuestion = $Question->find('all',
                 array('conditions' => array('Question.sbID' => $data['Test']['sbID']),
                     'fields' => array('Question.qID', 'Question.qAns',)));
-            // Number of question in test > Total question in database ==> return
-            Debugger::dump($listQuestion);
+            //Number of question in test > Total question in database ==> return
+            //Debugger::dump($listQuestion);
             if ($data['Test']['numberQuestion'] > count($listQuestion)) {
                 $this->Session->setFlash('ERROR: Number of question in your test too large!');
                 return;
@@ -36,6 +37,9 @@ class TestsController extends AppController{
                 $data['Test']['uID'] = $this->Auth->user('uID');
                 if ($this->Test->save($data)) {
                     $testID = $this->Test->find('first', array('order' => array('Test.created DESC'), 'fields' => array('Test.testID')));
+                } else {
+                    $this->Session->setFlash('ERROR!');
+                    return;
                 }
             }
 
@@ -69,7 +73,7 @@ class TestsController extends AppController{
 
 
     }
-
+    //List all tests
     public function index() {
         $listTest = $this->Test->find('all');
         //Debugger::dump($listTest);
@@ -102,14 +106,17 @@ class TestsController extends AppController{
     public function getResult()
     {
         $TestResult = ClassRegistry::init('TestResult');
+        $Question = ClassRegistry::init('Question');
+
         $testAns = $this->Session->read('testAns');
-        Debugger::dump($testAns);
+
         $testInfo = $this->Test->findByTestid($testAns['testID']);
         $listQues = $this->Test->ExamQuestion->find('all', array(
             'conditions' => array('ExamQuestion.testID' => $testAns['testID']),
             'fields' => array('ExamQuestion.*', 'Question.*'),
             'order' => array('ExamQuestion.index ASC')
         ));
+        Debugger::dump($testAns);
 
         $index = 0;
         $trueAns = 0;
@@ -123,16 +130,26 @@ class TestsController extends AppController{
                     } else {
                         $listQues[$index]['state'] = 'false';
                         $listQues[$index]['uAns'] = $QuestionResult;
-
                     }
                 } else {
-
                     $listQues[$index]['state'] = 'false';
                 }
+                //Update
+                if($listQues[$index]['state'] == 'true')
+                    $dataUpdate = array(
+                        'qID' => $listQues[$index]['Question']['qID'],
+                        'correctNum' => $listQues[$index]['Question']['correctNum']+1,
+                        'totalNum' => $listQues[$index]['Question']['totalNum']+1);
+                else
+                    $dataUpdate = array(
+                        'qID' => $listQues[$index]['Question']['qID'],
+                        'totalNum' => $listQues[$index]['Question']['totalNum']+1);
+                Debugger::dump($dataUpdate);
+                $Question->save($dataUpdate);
                 $index++;
             }
         }
-
+        Debugger::dump($listQues);
         $saveResult['TestResult']['uID'] = $this->Auth->user('uID');
         if(isset($testInfo['Test'])) {
             $saveResult['TestResult']['testID'] = $testInfo['Test']['testID'];
@@ -148,6 +165,7 @@ class TestsController extends AppController{
         $this->set('listQues', $listQues);
         $this->set('trueAns', $trueAns);
         $this->Session->delete('testAns');
+
         //$this->Session->destroy();
         //Debugger::dump($listQues);
         //Debugger::dump($trueAns);
@@ -164,7 +182,6 @@ class TestsController extends AppController{
         echo "<b>My first document</b>";
         echo "</body>";
         echo "</html>";
-
     }
 
 
