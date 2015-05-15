@@ -34,7 +34,14 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
+
+		echo "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">";
+
+	   	echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
 		echo $this->fetch('script');
+		echo $this->Html->css('stylesMenu');
+		echo $this->Html->script('jquery-1.11.2.min');
+		echo $this->Html->script('scriptMenu');
 	?>
 
   
@@ -42,14 +49,26 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 <body>
 	<div id="container">
 		<div id="header">
-			
+			<div id='cssmenu'>
+			<ul>
+			   <li class='active'><a href='#'>Home</a></li>
+			   <?php
+			   echo "<li>".$this->Html->link('Test', array('controller' => 'Tests','action' => 'index'))."</li>";
+			   echo "<li>".$this->Html->link('Question', array('controller' => 'Questions','action' => 'index','full_base' => true))."</li>";
+			   echo "<li>".$this->Html->link('Chấm Thi', array('controller' => 'Users','action' => 'examiner'))."</li>";
+			   echo "<li>".$this->Html->link('Luyện Tập', array('controller' => 'Users','action' => 'training'))."</li>";
+			   echo "<li>".$this->Html->link('Profile', array('controller' => 'Users','action' => 'profile'))."</li>";
+			   echo "<li>".$this->Html->link('Log Out', array('controller' => 'Users','action' => 'logout'))."</li>";
+			   ?>
+			</ul>
+			</div>
 		</div>
 		<div id="content">
 
 			<?php echo $this->Session->flash(); ?>
-
 			<?php echo $this->fetch('content'); ?>
 		</div>
+
 		<div id="footer">
 			<?php echo $this->Html->link(
 					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),

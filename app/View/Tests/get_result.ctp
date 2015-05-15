@@ -1,6 +1,9 @@
 <html>
+<head>
+    <?php //echo $menuBuilder->build('main-menu');?>
+</head>
 <body>
-<h1> View Test <h1>
+<h1> Kết quả bài test <h1>
 
 <?php
     $transformOption = array('1'=>'option_1', '2'=>'option_2', '3'=>'option_3', '4'=>'option_4');

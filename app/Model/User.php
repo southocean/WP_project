@@ -87,9 +87,11 @@ class User extends AppModel {
 			),
 		),
 		'gender' => array(
-			'boolean' => array(
-				'rule' => array('boolean'),
-			),
+            'valid' => array(
+                'rule' => array('inList', array('male', 'female')),
+                'message' => 'Please enter a valid gender',
+                'allowEmpty' => false
+            ),
 		),
 		'avatar' => array(
 			'url' => array(

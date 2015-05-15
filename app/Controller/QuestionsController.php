@@ -11,6 +11,10 @@ class QuestionsController extends AppController {
     public $components = array('Session');
 
     public function add() {
+        if($this->Auth->user('role') == "student") {
+            $this->Session->setFlash(__('Bạn không có quyền tạo câu hỏi.'));
+            return;
+        }
         $topics = $this->Question->Topic->find('list', array('fields' => array('Topic.topID','Topic.topName')));
         $subjects = $this->Question->Subject->find('list', array('fields' => array('Subject.sbID','Subject.sbName')));
 

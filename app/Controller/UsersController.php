@@ -46,7 +46,6 @@ class UsersController extends AppController {
 
     public function add() {
         if ($this->request->is('post')) {
-				
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been created'));
@@ -125,6 +124,9 @@ class UsersController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
+    /*
+     * Làm bài test
+     */
     public function makeTest($testID){
         $Test = ClassRegistry::init('Test');
         $testInfo = $Test->findByTestid($testID);
@@ -148,6 +150,10 @@ class UsersController extends AppController {
         }
     }
 
+    /*
+     * Lấy ID bài test
+     * phục vụ cho function examiner
+     */
     public function getTestId() {
             if($this->request->is('post')) {
             $Test = ClassRegistry::init('Test');
@@ -160,13 +166,29 @@ class UsersController extends AppController {
                 $this->redirect('examiner');
             }
             //Debugger::dump($data);
-
         }
-
     }
 
+    /*
+     * Chấm thi
+     */
     public function examiner() {
+        if($this->Auth->user('role') == "student") {
+            $this->Session->setFlash(__('Bạn không có quyền chấm thi.'));
+            return;
+        }
         $Test = ClassRegistry::init('Test');
+
+        if($this->request->is('post')) {
+            Debugger::dump($this->request->data);
+            $postData['chamthi'] = 1;
+            $postData['testID'] = 1;
+            $postData['result'] = $this->request->data;
+            $postData['uID'] = $this->Auth->user('uID');
+            $this->Session->write('testAns', $postData);
+            $this->redirect(array('controller' => 'tests','action' => 'getResult'));
+
+        }
 
         $testID = $this->Session->read('getTestId');
         if($testID == null) $this->redirect('getTestId');
@@ -178,15 +200,19 @@ class UsersController extends AppController {
             'order' => array('ExamQuestion.index ASC')
         ));
         $this->Session->delete('getTestId');
-
-        if($this->request->is('post')) {
-
-        }
         Debugger::dump($testInfo);
         Debugger::dump($listQues);
+        $this->set('testInfo', $testInfo);
+        $this->set('listQues', $listQues);
     }
 
+    /*
+     * Luyện tập
+     * Trả lời từng câu, hiển thị ngay kết quả.
+     */
+    public function training() {
 
+    }
 }
 
 ?>

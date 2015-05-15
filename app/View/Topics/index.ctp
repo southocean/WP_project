@@ -15,7 +15,7 @@
             echo "</tr>";
         }
     }
-    echo "</p><p>";
+    echo "</table></p><p>";
     echo $this->Html->link('Add topic', array('controller' => 'Topics','action' => 'add'));
 
     echo "</p>";

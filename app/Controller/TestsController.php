@@ -13,6 +13,10 @@ class TestsController extends AppController{
 
     function add()
     {
+        if($this->Auth->user('role') == "student") {
+            $this->Session->setFlash(__('Bạn không có quyền tạo test.'));
+            return;
+        }
         $subjects = $this->Test->Subject->find('list', array('fields' => array( 'Subject.sbID','Subject.sbName')));
         $this->set('subjects', $subjects);
         //Debugger::dump($subjects);
@@ -116,8 +120,7 @@ class TestsController extends AppController{
             'fields' => array('ExamQuestion.*', 'Question.*'),
             'order' => array('ExamQuestion.index ASC')
         ));
-        Debugger::dump($testAns);
-
+        //Debugger::dump($testAns);
         $index = 0;
         $trueAns = 0;
         if (isset($testAns['result'])) {
@@ -126,7 +129,6 @@ class TestsController extends AppController{
                     if (strcmp($listQues[$index]['ExamQuestion'][$QuestionResult], $listQues[$index]['Question']['qAns']) == 0) {
                         $listQues[$index]['state'] = 'true';
                         $trueAns++;
-
                     } else {
                         $listQues[$index]['state'] = 'false';
                         $listQues[$index]['uAns'] = $QuestionResult;
@@ -144,22 +146,27 @@ class TestsController extends AppController{
                     $dataUpdate = array(
                         'qID' => $listQues[$index]['Question']['qID'],
                         'totalNum' => $listQues[$index]['Question']['totalNum']+1);
-                Debugger::dump($dataUpdate);
+                //Debugger::dump($dataUpdate);
                 $Question->save($dataUpdate);
                 $index++;
             }
         }
-        Debugger::dump($listQues);
-        $saveResult['TestResult']['uID'] = $this->Auth->user('uID');
-        if(isset($testInfo['Test'])) {
-            $saveResult['TestResult']['testID'] = $testInfo['Test']['testID'];
-            if (count($listQues) > 0)
-                $saveResult['TestResult']['score'] = round(10 * $trueAns / count($listQues), 2);
-            try {
-                $TestResult->save($saveResult);
-            } catch (Exception $e) {
-                echo 'Caught exception: ', $e->getMessage(), "\n";
+        //Debugger::dump($listQues);
+        if(!isset($testAns['chamthi'])) {
+            $saveResult['TestResult']['uID'] = $this->Auth->user('uID');
+            if (isset($testInfo['Test'])) {
+                $saveResult['TestResult']['testID'] = $testInfo['Test']['testID'];
+                if (count($listQues) > 0)
+                    $saveResult['TestResult']['score'] = round(10 * $trueAns / count($listQues), 2);
+                try {
+                    $TestResult->save($saveResult);
+                } catch (Exception $e) {
+                    echo 'Caught exception: ', $e->getMessage(), "\n";
+                }
             }
+        }
+        else {
+            $this->Session->setFlash(__('Chấm thi'));
         }
         $this->set('testInfo', $testInfo);
         $this->set('listQues', $listQues);

@@ -9,21 +9,25 @@
 		echo $this->Form->input('email');
         echo $this->Form->input('password');
 		echo $this->Form->input('password_confirm', array('label' => 'Confirm Password *', 'maxLength' => 255, 'title' => 'Confirm password', 'type'=>'password'));
+        echo $this->form->input('birthday');
+        echo $this->form->input('gender', array(
+            'options' => array( 'male' => 'male', 'femail' => 'femail')));
+        echo $this->form->input('school', array('label' => 'School'));
         echo $this->Form->input('role', array(
             'options' => array( 'student' => 'Student', 'teacher' => 'Teacher')
         ));
 		
-		echo $this->Form->submit('Add User', array('class' => 'form-submit',  'title' => 'Click here to add the user') ); 
+		echo $this->Form->submit('Add User', array('class' => 'form-submit',  'title' => 'Click here to add the user'));
 ?>
     </fieldset>
 <?php echo $this->Form->end(); ?>
 </div>
 <?php 
 if($this->Session->check('Auth.User')){
-echo $this->Html->link( "Return to Dashboard",   array('action'=>'index') ); 
-echo "<br>";
-echo $this->Html->link( "Logout",   array('action'=>'logout') ); 
+    echo $this->Html->link( "Return to Dashboard",   array('action'=>'index') ); 
+    echo "<br>";
+    echo $this->Html->link( "Logout",   array('action'=>'logout') ); 
 }else{
-echo $this->Html->link( "Return to Login Screen",   array('action'=>'login') ); 
+    echo $this->Html->link( "Return to Login Screen",   array('action'=>'login') ); 
 }
 ?>
