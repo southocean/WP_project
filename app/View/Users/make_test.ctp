@@ -69,7 +69,7 @@
 ?>
 <script>
 	seconds = miutes * 60;
-	seconds = 3;	
+	//seconds = 3;	
     function secondPassed() {
     var minutes = Math.round((seconds - 30)/60);
     var remainingSeconds = seconds % 60;
