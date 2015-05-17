@@ -30,7 +30,6 @@ class QuestionsController extends AppController {
             $data['Question']['uID'] = $this->Auth->user('uID');
             $data['Question']['correctNum'] = 0;
             $data['Question']['totalNum'] = 0;
-            Debugger::dump($data);
             if($this->Question->save($data)){
                 $this->Session->setFlash('The question has been created!');
                 //$this->redirect('index');

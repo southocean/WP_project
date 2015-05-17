@@ -1,6 +1,6 @@
 <html lang="vi">
 <head>
-    <meta charset="iso-8859-1" />
+    
 </head>
 <body>
 <h1> List Question <h1>

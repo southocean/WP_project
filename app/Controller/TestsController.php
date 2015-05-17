@@ -177,6 +177,37 @@ class TestsController extends AppController{
         //Debugger::dump($listQues);
         //Debugger::dump($trueAns);
     }
+
+    // Trả về kết quả training cho user.
+    function trainingResult() {
+        $Question = ClassRegistry::init('Question');
+        $trainingAns = $this->Session->read('trainingAns');
+        $question = $Question->findByQid(key($trainingAns['TrainingSubmit']));
+
+        if($question['Question']['qAns'] == array_values($trainingAns['TrainingSubmit'])[0]) {
+            $question['state'] = 'true';
+            $dataUpdate = array(
+                'qID' => $question['Question']['qID'],
+                'correctNum' => $question['Question']['correctNum']+1,
+                'totalNum' => $question['Question']['totalNum']+1);
+
+        } else {
+            $question['state'] = 'false';
+            $question['userAns'] = array_values($trainingAns['TrainingSubmit'])[0];
+            $dataUpdate = array(
+                'qID' => $question['Question']['qID'],
+                'totalNum' => $question['Question']['totalNum']+1);
+        }
+        $Question->save($dataUpdate);
+        //Debugger::dump($question);
+        $this->set('trainingResult', $question);
+        if($this->request->is('post')) {
+            //Debugger::dump($this->request->data);
+            if(!isset($this->request->data['TrainingFinish']['flag']))
+                $this->redirect(array('controller' => 'Users','action' => 'training'));
+        }
+    }
+
     //Create file DOC
     function createDoc($listQuestion) {
 

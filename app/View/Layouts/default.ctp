@@ -39,9 +39,12 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 	   	echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
 		echo $this->fetch('script');
+		//echo $this->Html->css('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css');
+		echo $this->Html->css('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
 		echo $this->Html->css('stylesMenu');
 		echo $this->Html->script('jquery-1.11.2.min');
 		echo $this->Html->script('scriptMenu');
+
 	?>
 
   
@@ -51,14 +54,16 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<div id="header">
 			<div id='cssmenu'>
 			<ul>
-			   <li class='active'><a href='#'>Home</a></li>
+			   <!-- <li class='active'><a href='#'>Home</a></li> -->
 			   <?php
+			   echo "<li>".$this->Html->link('Home', array('controller' => 'Pages','action' => 'display'))."</li>";
 			   echo "<li>".$this->Html->link('Test', array('controller' => 'Tests','action' => 'index'))."</li>";
-			   echo "<li>".$this->Html->link('Question', array('controller' => 'Questions','action' => 'index','full_base' => true))."</li>";
+			   echo "<li>".$this->Html->link('Question', array('controller' => 'Questions','action' => 'index'))."</li>";
 			   echo "<li>".$this->Html->link('Chấm Thi', array('controller' => 'Users','action' => 'examiner'))."</li>";
 			   echo "<li>".$this->Html->link('Luyện Tập', array('controller' => 'Users','action' => 'training'))."</li>";
-			   echo "<li>".$this->Html->link('Profile', array('controller' => 'Users','action' => 'profile'))."</li>";
-			   echo "<li>".$this->Html->link('Log Out', array('controller' => 'Users','action' => 'logout'))."</li>";
+			   echo "<li>".$this->Html->link('Profile', array('controller' => 'Users','action' => 'viewProfile'))."</li>";
+			   if($this->Session->read('Auth.User'))
+			   		echo "<li>".$this->Html->link('Log Out', array('controller' => 'Users','action' => 'logout'))."</li>";
 			   ?>
 			</ul>
 			</div>

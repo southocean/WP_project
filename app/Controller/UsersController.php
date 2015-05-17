@@ -1,7 +1,7 @@
 <?php
 
 class UsersController extends AppController {
-
+    var $helpers = array('Gravatar');
 	public $paginate = array(
         'limit' => 25,
         'conditions' => array('status' => '1'),
@@ -124,6 +124,13 @@ class UsersController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
+    public function viewProfile() {
+        //$urlAvt =$this->Gravatar->get_gravatar($this->Auth->user('email'));
+        //Debugger::dump($urlAvt);
+        $this->set('userEmail', $this->Auth->user('email'));
+        $this->render("view_profile");
+    }
+
     /*
      * Làm bài test
      */
@@ -144,7 +151,7 @@ class UsersController extends AppController {
             $this->User->create();
             $postData['testID'] = $testID;
             $postData['result'] = $this->request->data;
-            $postData['uID'] = $this->Auth->user('uID');
+                $postData['uID'] = $this->Auth->user('uID');
             $this->Session->write('testAns', $postData);
             $this->redirect(array('controller' => 'tests','action' => 'getResult'));
         }
@@ -158,7 +165,7 @@ class UsersController extends AppController {
             if($this->request->is('post')) {
             $Test = ClassRegistry::init('Test');
             $data = $Test->findByTestid($this->request->data['TestID']['testID']);
-            Debugger::dump($data);
+            //Debugger::dump($data);
             if(!$data) {
                 $this->Session->setFlash(__('TestID not exist.'));
             } else {
@@ -180,7 +187,7 @@ class UsersController extends AppController {
         $Test = ClassRegistry::init('Test');
 
         if($this->request->is('post')) {
-            Debugger::dump($this->request->data);
+            //Debugger::dump($this->request->data);
             $postData['chamthi'] = 1;
             $postData['testID'] = 1;
             $postData['result'] = $this->request->data;
@@ -200,8 +207,8 @@ class UsersController extends AppController {
             'order' => array('ExamQuestion.index ASC')
         ));
         $this->Session->delete('getTestId');
-        Debugger::dump($testInfo);
-        Debugger::dump($listQues);
+        //Debugger::dump($testInfo);
+        //Debugger::dump($listQues);
         $this->set('testInfo', $testInfo);
         $this->set('listQues', $listQues);
     }
@@ -211,7 +218,15 @@ class UsersController extends AppController {
      * Trả lời từng câu, hiển thị ngay kết quả.
      */
     public function training() {
-
+        $Question = ClassRegistry::init('Question');
+        $totalQues = array_values($Question->find('list'));
+        $qID = $totalQues[rand(0,count($totalQues)-1)];
+        //Debugger::dump($Question->findByQid($qID));
+        $this->set('question', $Question->findByQid($qID));
+        if($this->request->is('post')) {
+            $this->Session->write('trainingAns', $this->request->data);
+            $this->redirect(array('controller' => 'tests','action' => 'trainingResult'));
+        }
     }
 }
 

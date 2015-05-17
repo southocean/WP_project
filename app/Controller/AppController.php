@@ -44,7 +44,7 @@ class AppController extends Controller {
             'loginError' => 'Invalid Username or Password entered, please try again.'
 
         ));
-
+    public $helpers = array('Html','Form');
     // only allow the login controllers only
     public function beforeFilter()
     {

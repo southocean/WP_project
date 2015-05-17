@@ -3,7 +3,6 @@
 	<?php
 		echo $this->Html->css('timer');
 		echo $this->Html->css('style');
-		echo $this->Html->script('jquery-1.11.2.min');
 		echo $this->Html->script('timer');
 		echo "<script> var time = ". $testInfo['Test']['time'] ."</script>";
 	?>
@@ -63,13 +62,13 @@
 
 ?>
 
-<span id="countdown" class="timer"></span>
+<!-- <span id="countdown" class="timer"></span> -->
 <?php
 	echo  "<script>var miutes = ".$testInfo['Test']['time']."</script>";
 ?>
 <script>
 	seconds = miutes * 60;
-	//seconds = 3;	
+	seconds = 3;	
     function secondPassed() {
     var minutes = Math.round((seconds - 30)/60);
     var remainingSeconds = seconds % 60;
@@ -79,14 +78,13 @@
     //document.getElementById('countdown').innerHTML = minutes + ":" +    remainingSeconds;
     if (seconds == 0) {
         clearInterval(countdownTimer);
-        //document.getElementById('countdown').innerHTML = "Buzz Buzz";
         window.alert("Bạn đã hết thời gian làm bài! \n Click OK to get result.");
         document.getElementById("TestResultMakeTestForm").submit();
     } else {
         seconds--;
     }
     }
-var countdownTimer = setInterval('secondPassed()', 1000);
+    var countdownTimer = setInterval('secondPassed()', 1000);
 </script>
 </body>
 </html>
