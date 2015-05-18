@@ -47,18 +47,21 @@
 <body>
 
     <div class="container">
+        <?php
+
+        ?>
         <section style="padding-bottom: 50px; padding-top: 50px;">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="<?php echo $this->Gravatar->get_gravatar($userEmail,500);?>" class="img-rounded img-responsive" />
+                    <img src="<?php echo $this->Gravatar->get_gravatar($userInfo['email'],500);?>" class="img-rounded img-responsive" />
                     <br />
                     <br />
                     <label>Registered Username</label>
-                    <input type="text" class="form-control" placeholder="Demouser">
-                    <label>Registered Name</label>
-                    <input type="text" class="form-control" placeholder="Jhon Deo">
+                    <input type="text" class="form-control" placeholder="<?php echo $userInfo['username']; ?>">
+                   <!--  <label>Registered Name</label>
+                    <input type="text" class="form-control" placeholder="Jhon Deo"> -->
                     <label>Registered Email</label>
-                    <input type="text" class="form-control" placeholder="jnondeao@gmail.com">
+                    <input type="text" class="form-control" placeholder="<?php echo $userInfo['email']; ?>">
                     <br>
                     <a href="#" class="btn btn-success">Update Details</a>
                     <br /><br/>
@@ -69,7 +72,7 @@
                         <h4>Bootstrap user profile template </h4>
                         <p>
                             Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                             3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. 
+                             3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
                         </p>
                     </div>
                     <div >

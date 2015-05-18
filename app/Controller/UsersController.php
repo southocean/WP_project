@@ -127,8 +127,14 @@ class UsersController extends AppController {
     public function viewProfile() {
         //$urlAvt =$this->Gravatar->get_gravatar($this->Auth->user('email'));
         //Debugger::dump($urlAvt);
-        $this->set('userEmail', $this->Auth->user('email'));
-        $this->render("view_profile");
+        $userInfo = $this->Session->read('Auth.User');
+        //Debugger::dump($userInfo);
+        $this->set('userInfo', $userInfo);
+        //$this->render("view_profile");
+        if($this->request->is('post')) {
+            $data = $this->request->data;
+            Debugger::dump($data);
+        }
     }
 
     /*

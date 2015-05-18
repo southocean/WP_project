@@ -1,26 +1,41 @@
 <html>
 <head>
-	<?php
-		echo $this->Html->css('timer');
-		echo $this->Html->css('style');
-		echo $this->Html->script('timer');
-		echo "<script> var time = ". $testInfo['Test']['time'] ."</script>";
-	?>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> <title>
+        CakePHP: the rapid development php framework:
+        Users   </title>
+    <link href="/WP_project/favicon.ico" type="image/x-icon" rel="icon">
+    <link href="/WP_project/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="/WP_project/css/cake.generic.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/WP_project/css/stylesMenu.css">
+    <script type="text/javascript" src="/WP_project/js/jquery-1.11.2.min.js"></script>
+    
 
-	<script type="text/javascript">
+    <?php
+        echo $this->Html->css('timer');
+        echo $this->Html->css('style');
+        echo $this->Html->script('timer');
+        echo "<script> var time = ". $testInfo['Test']['time'] ."</script>";
+    ?>
 
+    <script type="text/javascript">
+    // tính thời gian làm bài
     $(document).ready(function () {
 
       $('#timer-7').timer({duration: time, unit: 'm'});
       document.write(duration);
     })
+    </script>
 
-  </script>
 </head>
 
-<body>
-<h1> View Test <h1>
 
+<body>
+<h1> View Test </h1>
+
+<div class="question">
 <?php
     $transformOption = array('1'=>'option_1', '2'=>'option_2', '3'=>'option_3', '4'=>'option_4');
     echo "<p>";
@@ -37,9 +52,9 @@
         echo "<br>Time: ".$testInfo['Test']['time']." minutes";
         echo "<br>Number Questions: ".count($listQues);
         echo "</fieldset>";
-
-        echo "<div class=\"container\" style=\"margin-top:30px;\">";
-    	echo "<div class=\"row\"><div class=\"col col-12\"><div class=\"col col-1-3\"><div id=\"timer-7\"></div></div></div></div></div>";
+        echo "<div class=\"count-time\" style=\"margin-top:-30px;margin-left:70%; position: fixed; float:left\">";
+        echo "<div id=\"timer-7\"></div></div>";
+        
         echo $this->Form->create('TestResult');
         foreach($listQues as $item){
             echo "<fieldset>";
@@ -61,6 +76,7 @@
     
 
 ?>
+</div>
 
 <!-- <span id="countdown" class="timer"></span> -->
 <?php
@@ -68,12 +84,12 @@
 ?>
 <script>
 	seconds = miutes * 60;
-	seconds = 3;	
+	//seconds = 3;	
     function secondPassed() {
     var minutes = Math.round((seconds - 30)/60);
     var remainingSeconds = seconds % 60;
     if (remainingSeconds < 10) {
-        remainingSeconds = "0" + remainingSeconds; 
+        remainingSeconds = "0" + remainingSeconds;
     }
     //document.getElementById('countdown').innerHTML = minutes + ":" +    remainingSeconds;
     if (seconds == 0) {

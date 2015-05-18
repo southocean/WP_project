@@ -38,8 +38,8 @@
       <file leaf-file-name="UsersController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Controller/UsersController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.14143094" vertical-offset="459" max-vertical-offset="1632">
-              <caret line="129" column="29" selection-start-line="129" selection-start-column="20" selection-end-line="129" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.8202995" vertical-offset="153" max-vertical-offset="2499">
+              <caret line="135" column="34" selection-start-line="135" selection-start-column="34" selection-end-line="135" selection-end-column="34" />
               <folding>
                 <element signature="n#login#0;n#UsersController#0;n#!!top" expanded="false" />
                 <element signature="n#logout#0;n#UsersController#0;n#!!top" expanded="false" />
@@ -48,8 +48,6 @@
                 <element signature="n#edit#0;n#UsersController#0;n#!!top" expanded="false" />
                 <element signature="n#delete#0;n#UsersController#0;n#!!top" expanded="false" />
                 <element signature="n#activate#0;n#UsersController#0;n#!!top" expanded="false" />
-                <element signature="n#getTestId#0;n#UsersController#0;n#!!top" expanded="false" />
-                <element signature="n#examiner#0;n#UsersController#0;n#!!top" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -104,8 +102,8 @@
         <option value="$PROJECT_DIR$/app/Controller/QuestionsController.php" />
         <option value="$PROJECT_DIR$/app/Controller/TestsController.php" />
         <option value="$PROJECT_DIR$/app/Controller/AppController.php" />
-        <option value="$PROJECT_DIR$/app/Controller/UsersController.php" />
         <option value="$PROJECT_DIR$/app/View/Helper/GravatarHelper.php" />
+        <option value="$PROJECT_DIR$/app/Controller/UsersController.php" />
       </list>
     </option>
   </component>
@@ -599,7 +597,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="63" y="3" width="1302" height="764" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -607,7 +605,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22472784" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22472784" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -669,8 +667,6 @@
             <element signature="n#edit#0;n#UsersController#0;n#!!top" expanded="false" />
             <element signature="n#delete#0;n#UsersController#0;n#!!top" expanded="false" />
             <element signature="n#activate#0;n#UsersController#0;n#!!top" expanded="false" />
-            <element signature="n#getTestId#0;n#UsersController#0;n#!!top" expanded="false" />
-            <element signature="n#examiner#0;n#UsersController#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -694,8 +690,6 @@
             <element signature="n#edit#0;n#UsersController#0;n#!!top" expanded="false" />
             <element signature="n#delete#0;n#UsersController#0;n#!!top" expanded="false" />
             <element signature="n#activate#0;n#UsersController#0;n#!!top" expanded="false" />
-            <element signature="n#getTestId#0;n#UsersController#0;n#!!top" expanded="false" />
-            <element signature="n#examiner#0;n#UsersController#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -785,13 +779,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/View/Questions/add.ctp">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="391">
           <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
         </state>
-      </provider>
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/View/Topics/index.ctp">
@@ -872,13 +866,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Config/email.php.default">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.41761827" vertical-offset="781" max-vertical-offset="1700">
           <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
         </state>
-      </provider>
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/Cake/View/Helper/PaginatorHelper.php">
@@ -1021,6 +1015,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/View/Helper/GravatarHelper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40599" vertical-offset="300" max-vertical-offset="901">
+          <caret line="32" column="69" selection-start-line="32" selection-start-column="69" selection-end-line="32" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Controller/AppController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.038462" vertical-offset="189" max-vertical-offset="816">
@@ -1029,18 +1030,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/View/Helper/GravatarHelper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40599" vertical-offset="300" max-vertical-offset="901">
-          <caret line="32" column="69" selection-start-line="32" selection-start-column="69" selection-end-line="32" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Controller/UsersController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14143094" vertical-offset="459" max-vertical-offset="1632">
-          <caret line="129" column="29" selection-start-line="129" selection-start-column="20" selection-end-line="129" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.8202995" vertical-offset="153" max-vertical-offset="2499">
+          <caret line="135" column="34" selection-start-line="135" selection-start-column="34" selection-end-line="135" selection-end-column="34" />
           <folding>
             <element signature="n#login#0;n#UsersController#0;n#!!top" expanded="false" />
             <element signature="n#logout#0;n#UsersController#0;n#!!top" expanded="false" />
@@ -1049,8 +1042,6 @@
             <element signature="n#edit#0;n#UsersController#0;n#!!top" expanded="false" />
             <element signature="n#delete#0;n#UsersController#0;n#!!top" expanded="false" />
             <element signature="n#activate#0;n#UsersController#0;n#!!top" expanded="false" />
-            <element signature="n#getTestId#0;n#UsersController#0;n#!!top" expanded="false" />
-            <element signature="n#examiner#0;n#UsersController#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
