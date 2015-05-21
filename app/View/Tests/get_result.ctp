@@ -8,9 +8,8 @@
 <?php
     $transformOption = array('1'=>'option_1', '2'=>'option_2', '3'=>'option_3', '4'=>'option_4');
     echo "<p>";
-    if($listQues == NULL ){
-        echo "<h2>Please make test first!</h2>";
-    } else {
+    $listQues = isset($listQues) ? $listQues : null;
+    if($listQues != NULL ) {
         echo "<div id=\"testInfo\"><p>";
         echo "<fieldset>";  
         echo "  <legend>TEST INFO</legend>";

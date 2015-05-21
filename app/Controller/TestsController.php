@@ -11,10 +11,9 @@ class TestsController extends AppController{
     public $components = array('Session');
 
 
-    function add()
-    {
+    function add() {
         if($this->Auth->user('role') == "student") {
-            $this->Session->setFlash(__('Bạn không có quyền tạo test.'));
+            $this->Session->setFlash(__('Bạn là student, bạn không thể tạo test.'));
             return;
         }
         $subjects = $this->Test->Subject->find('list', array('fields' => array( 'Subject.sbID','Subject.sbName')));
@@ -74,9 +73,8 @@ class TestsController extends AppController{
             $this->Session->setFlash('The test has been created!');
             $this->redirect('index');
         }
-
-
     }
+
     //List all tests
     public function index() {
         $listTest = $this->Test->find('all');
@@ -107,20 +105,28 @@ class TestsController extends AppController{
     }
 
     //Get result from test
-    public function getResult()
-    {
+    public function getResult() {
         $TestResult = ClassRegistry::init('TestResult');
         $Question = ClassRegistry::init('Question');
+        $UserLevel = ClassRegistry::init('UserLevel');
 
         $testAns = $this->Session->read('testAns');
-
+        //Debugger::dump($testAns);
+        if($testAns == null) {
+            $this->Session->setFlash(__('Hãy làm bài test trước khi lấy kết quả.'));
+            return;
+        }
         $testInfo = $this->Test->findByTestid($testAns['testID']);
         $listQues = $this->Test->ExamQuestion->find('all', array(
             'conditions' => array('ExamQuestion.testID' => $testAns['testID']),
             'fields' => array('ExamQuestion.*', 'Question.*'),
             'order' => array('ExamQuestion.index ASC')
         ));
-        //Debugger::dump($testAns);
+        $userlevel = $UserLevel->find('all', array(
+            'conditions' => array('UserLevel.uID' => $this->Auth->user('uID'), 'UserLevel.sbID' => $testInfo['Subject']['sbID']),
+            'fields' => array('UserLevel.*')
+        ));
+        //Debugger::dump($userlevel);
         $index = 0;
         $trueAns = 0;
         if (isset($testAns['result'])) {
@@ -136,7 +142,7 @@ class TestsController extends AppController{
                 } else {
                     $listQues[$index]['state'] = 'false';
                 }
-                //Update
+                //Update level for Question
                 if($listQues[$index]['state'] == 'true')
                     $dataUpdate = array(
                         'qID' => $listQues[$index]['Question']['qID'],
@@ -148,6 +154,37 @@ class TestsController extends AppController{
                         'totalNum' => $listQues[$index]['Question']['totalNum']+1);
                 //Debugger::dump($dataUpdate);
                 $Question->save($dataUpdate);
+
+                //Update level for User
+                if(isset($userlevel[0])) {
+                    if($listQues[$index]['state'] == 'true')
+                        $dataLevel = array(
+                            'ulID' => $userlevel[0]['UserLevel']['ulID'],
+                            'correctNum' => $userlevel[0]['UserLevel']['correctNum']+1,
+                            'totalNum' => $userlevel[0]['UserLevel']['totalNum']+1);
+                    else
+                        $dataLevel = array(
+                            'ulID' => $userlevel[0]['UserLevel']['ulID'],
+                            'totalNum' => $userlevel[0]['UserLevel']['totalNum']+1);
+                } else {
+                    if($listQues[$index]['state'] == 'true')
+                        $dataLevel  = array(
+                            'uID' => $this->Auth->user('uID'),
+                            'sbID' => $testInfo['Subject']['sbID'],
+                            'correctNum' => 1,
+                            'totalNum' => 1);
+                    else
+                        $dataLevel = array(
+                            'uID' => $this->Auth->user('uID'),
+                            'sbID' => $testInfo['Subject']['sbID'],
+                            'totalNum' => 1);  
+                }
+                $UserLevel->save($dataLevel);
+                $userlevel = $UserLevel->find('all', array(
+                    'conditions' => array('UserLevel.uID' => $this->Auth->user('uID'), 'UserLevel.sbID' => $testInfo['Subject']['sbID']),
+                    'fields' => array('UserLevel.*')
+                ));
+
                 $index++;
             }
         }
@@ -181,9 +218,16 @@ class TestsController extends AppController{
     // Trả về kết quả training cho user.
     function trainingResult() {
         $Question = ClassRegistry::init('Question');
+        $UserLevel = ClassRegistry::init('UserLevel');
+
         $trainingAns = $this->Session->read('trainingAns');
         $question = $Question->findByQid(key($trainingAns['TrainingSubmit']));
-
+        
+        $userlevel = $UserLevel->find('all', array(
+            'conditions' => array('UserLevel.uID' => $this->Auth->user('uID'), 'UserLevel.sbID' => $question['Subject']['sbID']),
+            'fields' => array('UserLevel.*')
+        ));
+        
         if($question['Question']['qAns'] == array_values($trainingAns['TrainingSubmit'])[0]) {
             $question['state'] = 'true';
             $dataUpdate = array(
@@ -199,6 +243,33 @@ class TestsController extends AppController{
                 'totalNum' => $question['Question']['totalNum']+1);
         }
         $Question->save($dataUpdate);
+
+        if(isset($userlevel[0])) {
+            if($question['state'] == 'true')
+                $dataLevel = array(
+                    'ulID' => $userlevel[0]['UserLevel']['ulID'],
+                    'correctNum' => $userlevel[0]['UserLevel']['correctNum']+1,
+                    'totalNum' => $userlevel[0]['UserLevel']['totalNum']+1);
+            else
+                $dataLevel = array(
+                    'ulID' => $userlevel[0]['UserLevel']['ulID'],
+                    'totalNum' => $userlevel[0]['UserLevel']['totalNum']+1);
+        } else {
+            if($question['state'] == 'true')
+                $dataLevel  = array(
+                    'uID' => $this->Auth->user('uID'),
+                    'sbID' => $question['Subject']['sbID'],
+                    'correctNum' => 1,
+                    'totalNum' => 1);
+            else
+                $dataLevel = array(
+                    'uID' => $this->Auth->user('uID'),
+                    'sbID' => $question['Subject']['sbID'],
+                    'totalNum' => 1); 
+        }
+        $UserLevel->save($dataLevel);
+
+        
         //Debugger::dump($question);
         $this->set('trainingResult', $question);
         if($this->request->is('post')) {

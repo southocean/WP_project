@@ -28,7 +28,9 @@
             }
         }
         echo "</table></p><p>";
-        echo $this->Html->link('Add question', array('controller' => 'Questions','action' => 'add'));
+        if(AuthComponent::User('role') != 'student') {
+            echo $this->Html->link('Add question', array('controller' => 'Questions','action' => 'add'));
+        }
         echo "</p>";
     ?>
 </body>

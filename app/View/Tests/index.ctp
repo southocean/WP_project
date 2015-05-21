@@ -35,8 +35,9 @@
         echo "</table>";
     }
     echo "</p><p>";
-    echo $this->Html->link('Add Test', array('controller' => 'Tests','action' => 'add'));
-
+    if(AuthComponent::User('role') != 'student') {
+        echo $this->Html->link('Add Test', array('controller' => 'Tests','action' => 'add'));
+    }
     echo "</p>";
 ?>
 </body>

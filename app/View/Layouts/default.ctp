@@ -59,7 +59,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			   echo "<li>".$this->Html->link('Home', array('controller' => 'Pages','action' => 'display'))."</li>";
 			   echo "<li>".$this->Html->link('Test', array('controller' => 'Tests','action' => 'index'))."</li>";
 			   echo "<li>".$this->Html->link('Question', array('controller' => 'Questions','action' => 'index'))."</li>";
-			   echo "<li>".$this->Html->link('Chấm Thi', array('controller' => 'Users','action' => 'examiner'))."</li>";
+			   if($this->Session->read('Auth.User.role') != "student" && $this->Session->read('Auth.User')) {
+			   		echo "<li>".$this->Html->link('Chấm Thi', array('controller' => 'Users','action' => 'examiner'))."</li>";
+			   }
 			   echo "<li>".$this->Html->link('Luyện Tập', array('controller' => 'Users','action' => 'training'))."</li>";
 			   echo "<li>".$this->Html->link('Profile', array('controller' => 'Users','action' => 'viewProfile'))."</li>";
 			   if($this->Session->read('Auth.User'))
