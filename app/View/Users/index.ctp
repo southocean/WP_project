@@ -29,10 +29,10 @@
 			<td >
 			<?php echo $this->Html->link(    "Edit",   array('action'=>'edit', $user['User']['uID']) ); ?> | 
 			<?php
-				if( $user['User']['status'] != 0){ 
-					echo $this->Html->link(    "Delete", array('action'=>'delete', $user['User']['uID']));
+				if( $user['User']['status'] != 0){
+					echo $this->Html->link("Delete", array('action'=>'delete', $user['User']['uID']));
 				} else {
-					echo $this->Html->link(    "Re-Activate", array('action'=>'activate', $user['User']['uID']));
+					echo $this->Html->link("Re-Activate", array('action'=>'activate', $user['User']['uID']));
 				}
 			?>
 			</td>

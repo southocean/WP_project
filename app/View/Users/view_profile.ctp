@@ -11,34 +11,26 @@
     <!-- BOOTSTRAP STYLE SHEET -->
     <link href="http://lipis.github.io/bootstrap-social/assets/css/bootstrap.css" rel="stylesheet">
     <link href="http://lipis.github.io/bootstrap-social/assets/css/font-awesome.css" rel="stylesheet">
-    <!-- <link href="assets/css/bootstrap.css" rel="stylesheet" /> -->
-    <!-- FONT-AWESOME STYLE SHEET FOR BEAUTIFUL ICONS -->
-    <!-- <link href="assets/css/font-awesome.css" rel="stylesheet" /> -->
      <!-- CUSTOM STYLE CSS -->
     <style type="text/css">
-               .btn-social {
+       .btn-social {
             color: white;
             opacity: 0.8;
         }
-
-            .btn-social:hover {
-                color: white;
-                opacity: 1;
-                text-decoration: none;
-            }
-
+        .btn-social:hover {
+            color: white;
+            opacity: 1;
+            text-decoration: none;
+        }
         .btn-facebook {
             background-color: #3b5998;
         }
-
         .btn-twitter {
             background-color: #00aced;
         }
-
         .btn-linkedin {
             background-color: #0e76a8;
         }
-
         .btn-google {
             background-color: #c32f10;
         }
@@ -56,24 +48,39 @@
                     <img src="<?php echo $this->Gravatar->get_gravatar($userInfo['email'],500);?>" class="img-rounded img-responsive" />
                     <br />
                     <br />
-                    <label>Registered Username</label>
+                    <label> Username</label>
                     <input type="text" class="form-control" placeholder="<?php echo $userInfo['username']; ?>">
-                   <!--  <label>Registered Name</label>
-                    <input type="text" class="form-control" placeholder="Jhon Deo"> -->
-                    <label>Registered Email</label>
+                    <label> Email</label>
                     <input type="text" class="form-control" placeholder="<?php echo $userInfo['email']; ?>">
                     <br>
-                    <a href="#" class="btn btn-success">Update Details</a>
+                    <!-- <a href="#" class="btn btn-success">Update Details</a> -->
                     <br /><br/>
                 </div>
                 <div class="col-md-8">
                     <div class="alert alert-info">
-                        <h2>User Bio : </h2>
-                        <h4>Bootstrap user profile template </h4>
-                        <p>
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                             3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                        </p>
+                        <h2>User Level : </h2>
+                        <?php
+                            foreach ($userlevel as $item) {
+                                $percentage = (int)$item['UserLevel']['correctNum']*100/$item['UserLevel']['totalNum'];
+                                
+                                if($percentage > 75)
+                                    $barType = 'progress-bar-success';
+                                elseif ($percentage > 50)
+                                    $barType = 'progress-bar-info';
+                                elseif ($percentage > 25)
+                                    $barType = 'progress-bar-warning';
+                                else
+                                    $barType = 'progress-bar-danger';
+
+                                echo $item['Subject']['sbName'];
+                                echo "<div class=\"progress\">
+                                   <div class=\"progress-bar ".$barType."\" role=\"progressbar\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: ".$percentage."%;\">
+                                      <span class=\"sr-only\">90% Complete (Sucess)</span>
+                                   </div>
+                                </div>";
+                            }
+                            
+                        ?>
                     </div>
                     <div >
                         <a href="#" class="btn btn-social btn-facebook">
@@ -84,6 +91,7 @@
                             <i class="fa fa-twitter"></i>&nbsp; Twitter </a>
                         <a href="#" class="btn btn-social btn-linkedin">
                             <i class="fa fa-linkedin"></i>&nbsp; Linkedin </a>
+                    </div>
                     </div>
                     <div class="form-group col-md-8">
                         <h3>Change YOur Password</h3>

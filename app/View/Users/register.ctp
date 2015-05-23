@@ -1,4 +1,25 @@
+
+
 <!-- app/View/Users/add.ctp -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <?php
+    echo $this->Html->css('datetimepicker');
+    echo $this->Html->script('zebra_datepicker');
+    echo $this->Html->script('core-datetimepicker');
+
+    ?>
+    <!-- <link rel="stylesheet" href="../public/css/datetimepicker.css" type="text/css"> -->
+
+    
+
+</head>
+<body>
+
+
 <div class="users form">
 
 <?php echo $this->Form->create('User');?>
@@ -9,10 +30,10 @@
 		echo $this->Form->input('email');
         echo $this->Form->input('password');
 		echo $this->Form->input('password_confirm', array('label' => 'Confirm Password *', 'maxLength' => 255, 'title' => 'Confirm password', 'type'=>'password'));
-        echo $this->form->input('birthday');
-        echo $this->form->input('gender', array(
+        echo $this->Form->input('birthday');
+        echo $this->Form->input('gender', array(
             'options' => array( 'male' => 'male', 'femail' => 'femail')));
-        echo $this->form->input('school', array('label' => 'School'));
+        echo $this->Form->input('school', array('label' => 'School'));
         echo $this->Form->input('role', array(
             'options' => array( 'student' => 'Student', 'teacher' => 'Teacher')
         ));
@@ -31,3 +52,5 @@ if($this->Session->check('Auth.User')){
     echo $this->Html->link( "Return to Login Screen",   array('action'=>'login') ); 
 }
 ?>
+</body>
+</html>

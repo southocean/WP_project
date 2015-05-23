@@ -39,9 +39,17 @@
  */
 class EmailConfig {
 
+	public $gmail = array(
+        'host' => 'ssl://smtp.gmail.com',
+        'port' => 465,
+        'username' => 'nguyentienhuong93@gmail.com',
+        'password' => '02081993',
+        'transport' => 'Smtp'
+    );
+
 	public $default = array(
 		'transport' => 'Mail',
-		'from' => 'you@localhost',
+		'from' => 'nguyentienhuong93@gmail.com',
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);

@@ -143,16 +143,17 @@ class User extends AppModel {
                 )
             )
         );
-
-        if(!empty($username)){
-            if($this->data[$this->alias]['uID'] == $username['User']['uID']){
-                return true;
-            }else{
-                return false;
-            }
-        }else{
+        
+    if(!empty($username)){
+        if($this->data[$this->alias]['uID'] == $username['User']['uID']){
             return true;
+        }else{
+            return false;
         }
+    }else{
+        return true;
+    }
+        
     }
 
     /**
@@ -223,6 +224,14 @@ class User extends AppModel {
 
         // fallback to our parent
         return parent::beforeSave($options);
+    }
+
+    function getActivationHash()
+    {
+        if (!isset($this->id)) {
+            return false;
+        }
+        return substr(Security::hash(Configure::read('Security.salt').$this->field('created').date('Ymd')), 0, 8);
     }
 
     /*

@@ -48,6 +48,7 @@ class AppController extends Controller {
     // only allow the login controllers only
     public function beforeFilter()
     {
+        //$this->Auth->fields = array('username' => 'username', 'password' => 'password');    
         $this->Auth->allow('login');
     }
 
